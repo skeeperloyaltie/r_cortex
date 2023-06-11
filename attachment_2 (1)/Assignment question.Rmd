@@ -1,0 +1,84 @@
+---
+title: "Assignment "
+author: ""
+output: html_document
+---
+***
+
+
+*** 
+
+(1) We will revisit the `nycflights13` data set. Extract the entries in February from the `flights` and `weather` dataset using `filter()` and `%>%`. Join the two extracted data sets together by `origin` and `time_hour`. 
+You may want to use the `inner_join()` function for joining the data sets.
+
+***
+
+(2) Create a scatter plot of arrival delay versus precipitation using the data set obtained in Part 1. Explain your findings.
+
+
+***
+
+
+(3) Create a polynomial expansion of the `precip` variable to the 15th degree using `poly()` function. 
+
+
+***
+
+
+(4) Consider arrival delay as the outcome and the polynomial terms obtained in Part (3) as the covariates. Build a prediction model using linear regression with lasso. Select the tuning parameter using cross-validation. You may want to use the `cv.glmnet` function in `glmnet`. Report the fitted model.
+
+
+***
+
+
+(5) Consider the `iris` data. Extract the data corresponding to the flower types  _versicolor_ and _virginica_, numbering a total of $100$ flowers. Set aside the first $10$ observations for each flower type as test data and use the remaining data consisting of 80 observations (with flower types as class labels) as training data.   
+
+
+***
+
+
+
+(6)  Use _Linear Discriminant Analysis (LDA)_ for classifying the test data. Use Sepal.Length and Sepal.Width as the predictor variables (or features). You may want to use the function `lda()`.
+    a. Report the class-specific means of the predictor variables	for the training data.
+    b. Compute the _confusion matrix_ for the test data, and the misclassification error rate.
+
+
+
+***
+
+
+(7)  Fit a logistic regression model to the training data, using the variables Sepal.Length and Sepal.Width as predictors. You may want to use `glm()` with argument `family = "binomial"`.
+    a. Obtain the estimates and their standard errors  for the model parameters. 
+    b.  Compute the _confusion matrix_ for the test data, and the misclassification error rate. 
+    c.  Are both the predictor variables necessary for the purpose of classification? Justify.
+
+***
+
+
+(8) Fit a logistic regression model to the training data, using the variable Sepal.Length as the only predictor. 
+    a. Obtain the estimates and their standard errors for the model parameters. 
+    b. Compute the _confusion matrix_ for the test data, and the misclassification error rate. 
+    c. Compare the results with those in Question 7. Does your result in 8.b support the answer to 7.c?
+
+***
+
+
+(9)  Use the _k Nearest Neighbors (kNN)_ classification method to classify the test data, using only Sepal.Length as the predictor variable. Perform this analysis using $k=1$ and $k=5$. In each case, compute the _confusion matrix_ for the test data, and the misclassification error rate.  You may want to use the `knn()` function.
+
+***
+
+
+(10)  Write a very brief summary (maximum of 200 words) about the comparative performance of the 
+		three different classification methods for this data set. 
+		
+		
+***
+
+## Acknowledgement {-}
+
+## Session information {-}
+```{r}
+sessionInfo()
+```
+
+

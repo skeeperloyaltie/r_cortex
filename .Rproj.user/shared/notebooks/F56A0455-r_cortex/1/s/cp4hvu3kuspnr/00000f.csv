@@ -1,0 +1,13 @@
+"0","# Set the seed for reproducibility"
+"0","set.seed(123)"
+"0",""
+"0","# Convert 'data' to a data frame if it is a list"
+"0","if (is.list(data)) {"
+"0","  data <- as.data.frame(data)"
+"0","}"
+"0",""
+"0","# Split the data into training and test sets"
+"0","train_data <- subset(data, session != 1)  # Exclude Session 1 from the training set"
+"2","Error in subset.default(data, session != 1) : 
+  'list' object cannot be coerced to type 'double'
+"
