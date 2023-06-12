@@ -81,6 +81,23 @@ In this section, we perform exploratory analysis on the dataset to gain insights
 
 We start by examining the data structures across sessions. This includes the number of neurons, number of trials, stimuli conditions, and feedback types. We use the available metadata to summarize these aspects for each session. For example, in Session 1, we have 114 trials with various stimuli conditions, such as contrast levels for left and right stimuli. The feedback types indicate whether the mouse's decision based on the stimuli was successful or not.
 
+```{r}
+# Plot the distribution of feedback types across sessions
+library(ggplot2)
+
+# Extract the feedback types and sessions from the EDA results
+feedback_types <- sapply(session, function(s) s$feedback_types)
+sessions <- 1:length(session)
+
+# Create a data frame for plotting
+feedback_df <- data.frame(feedback_type = unlist(feedback_types), session = rep(sessions, sapply(feedback_types, length)))
+
+
+
+
+
+```
+
 <b> 2.2 Neural Activities During Each Trial</b>
 
 Next, we explore the neural activities during each trial. The spike trains provided in the dataset represent the firing of neurons in the visual cortex. We analyze the spike trains to understand the patterns of neural activity during different trial conditions. This analysis may involve visualizations, such as raster plots or peri-stimulus time histograms, to depict the firing patterns of neurons in response to stimuli.
@@ -157,6 +174,15 @@ tail(integrated_data)
 
 In this section, we will build a predictive model using the integrated dataset to predict the outcome (feedback types) of each trial. We will explore different modeling approaches and evaluate their performance.
 
+```{r}
+# Boxplot
+ggplot(integrated_data, aes(x = session, y = feedback_type, group = session)) +
+  geom_boxplot() +
+  labs(x = "Session", y = "Feedback Type") +
+  ggtitle("Boxplot of Feedback Types across Sessions") +
+  theme_minimal()
+```
+
 <b> 4.1 Model Selection</b>
 
 Consider various modeling techniques suitable for classification tasks.
@@ -183,6 +209,18 @@ Select a subset of features that improve model performance and interpretability.
 Split the integrated dataset into training and validation sets.
 Train the selected model using the training set.
 Evaluate the model's performance on the validation set using appropriate metrics such as accuracy, precision, recall, F1-score, or area under the ROC curve.
+
+```{r}
+library(ggplot2)
+
+# Scatter plot
+ggplot(integrated_data, aes(x = contrast_left, y = contrast_right)) +
+  geom_point() +
+  labs(x = "Left Contrast", y = "Right Contrast") +
+  ggtitle("Scatter Plot of Contrast Levels") +
+  theme_minimal()
+
+```
 
 <b> 4.4 Hyperparameter Tuning </b>
 
