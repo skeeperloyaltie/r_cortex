@@ -3,7 +3,14 @@ title: "r_cortex"
 output: html_document
 date: "`r Sys.Date()`"
 ---
-<h3>Title: Predictive Modeling of Trial Outcomes using Neural Activity Data and Stimuli </h3> <br> <h4>Contrasts: A Gradient Boosting Machine Approach</h4>
+<h3>Title: Predictive Modeling of Trial Outcomes using Neural Activity Data and Stimuli </h3> 
+<h4>Contrasts: A Gradient Boosting Machine Approach</h4>
+
+<h3> Abstract </h3>
+
+This project aims to analyze a mouse visual cortex dataset collected by Steinmetz et al. (2019) and build a predictive model to predict the outcome (feedback type) of each trial based on neural activity data and stimuli information. The dataset consists of recordings from 10 mice over 39 sessions, where visual stimuli were presented to the mice, and their responses were recorded. In this project, we focused on 18 sessions from four mice and analyzed the spike trains of neurons in the visual cortex.
+
+The project is divided into several parts. In the exploratory data analysis, we described the data structures across sessions, explored neural activities during each trial, examined changes across trials, and investigated homogeneity and heterogeneity across sessions and mice. We then proceeded to integrate the data across sessions, combining relevant variables and addressing any differences between sessions.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -199,11 +206,19 @@ selected_data <- integrated_data %>%
 # Convert feedback_type to a factor with two levels
 selected_data$feedback_type <- factor(selected_data$feedback_type, levels = c(-1, 1), labels = c("failure", "success"))
 
+head(selected_data)
+```
+
+```{r}
 # Split the data into training and testing sets
 set.seed(123) # for reproducibility
 train_indices <- sample(nrow(selected_data), nrow(selected_data) * 0.8) # 80% for training
 train_data <- selected_data[train_indices, ]
 test_data <- selected_data[-train_indices, ]
+head(test_data)
+```
+
+```{r}
 
 # Build the prediction model
 model <- train(
@@ -237,5 +252,51 @@ accuracy <- confusionMatrix(predictions, test_data$feedback_type)$overall["Accur
 cat("Model Accuracy:", accuracy, "\n")
 
 ```
-<h3> Conclusion </h3> 
-In conclusion, this project successfully explored the mouse visual cortex dataset, integrated the data across sessions, built a predictive model using GBM, and evaluated its performance on test sets. The findings suggest that neural activity data combined with stimuli information can be utilized to predict feedback types with reasonable accuracy. This analysis contributes to a better understanding of the relationship between neural activity and decision-making processes, showcasing the potential for further advancements in neuroscientific research and cognitive modeling.
+
+```{r}
+
+# Load the necessary libraries and functions
+library(gbm)  # Assuming we used the gbm package for modeling
+library(readr)  # Assuming we use readRDS() function to load the test data
+
+# Load the test data from Session 1 and Session 18
+test_data_1 <- readRDS("test/test1.rds")
+test_data_18 <- readRDS("test/test2.rds")
+
+# Combine the test data from Session 1 and Session 18
+test_data_ <- rbind(test_data_1, test_data_18)
+
+# Preprocess the test data (if necessary) - perform any necessary transformations or feature engineering
+head(test_data)
+```
+
+```{r}
+
+# Extract the input features from the test data
+test_features <- test_data_[, c("contrast_left", "contrast_right", "feedback_type")]
+test_features$feedback_type <- factor(test_features$feedback_type, levels = c(-1, 1), labels = c("failure", "success"))
+
+head(test_features$feedback_type)
+```
+
+```{r}
+
+# Make predictions using the trained model
+test_predictions <- predict(model, newdata = test_features, type = "response")  # Adjust "trained_model" with the name of your trained model
+
+# Assess the performance of the predictions based on the chosen criteria
+# Define your evaluation metrics and compare the predicted outcomes with the true feedback types in the test data
+
+# Example of evaluation metric: Accuracy
+# Assuming the true feedback types are stored in a variable called "true_feedback_types" in the test data
+true_feedback_types <- test_data$feedback_type
+accuracy <- sum(test_predictions == true_feedback_types) / length(true_feedback_types)
+
+# Print the performance metric(s)
+print(paste("Accuracy:", accuracy))
+
+```
+
+
+<h3> Discussion </h3> 
+This project successfully explored the mouse visual cortex dataset, integrated the data across sessions, built a predictive model using GBM, and evaluated its performance on test sets. The findings suggest that neural activity data combined with stimuli information can be utilized to predict feedback types with reasonable accuracy. This analysis contributes to a better understanding of the relationship between neural activity and decision-making processes, showcasing the potential for further advancements in neuroscientific research and cognitive modeling.
