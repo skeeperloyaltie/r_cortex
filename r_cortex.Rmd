@@ -16,7 +16,7 @@ The project is divided into several parts. In the exploratory data analysis, we 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<b>Section 1: Introduction</b>
+<h3>Section 1: Introduction</h3>
 
 The objective of this analysis is to build a predictive model for trial outcomes using neural activity data and stimuli contrasts. The data used in this study is a subset of the dataset collected by Steinmetz et al. (2019) during experiments conducted on mice. The mice were presented with visual stimuli on two screens, and their neural activity in the visual cortex was recorded. The neural activity data is provided in the form of spike trains, representing the firing of neurons during each trial.
 
@@ -282,7 +282,7 @@ head(test_features$feedback_type)
 ```{r}
 
 # Make predictions using the trained model
-test_predictions <- predict(model, newdata = test_features, type = "response")  # Adjust "trained_model" with the name of your trained model
+test_predictions <- predict(model, newdata = test_data)  # Adjust "trained_model" with the name of your trained model
 
 # Assess the performance of the predictions based on the chosen criteria
 # Define your evaluation metrics and compare the predicted outcomes with the true feedback types in the test data
@@ -300,3 +300,7 @@ print(paste("Accuracy:", accuracy))
 
 <h3> Discussion </h3> 
 This project successfully explored the mouse visual cortex dataset, integrated the data across sessions, built a predictive model using GBM, and evaluated its performance on test sets. The findings suggest that neural activity data combined with stimuli information can be utilized to predict feedback types with reasonable accuracy. This analysis contributes to a better understanding of the relationship between neural activity and decision-making processes, showcasing the potential for further advancements in neuroscientific research and cognitive modeling.
+
+```{r}
+sessionInfo()
+```
